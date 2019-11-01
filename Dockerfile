@@ -45,15 +45,6 @@ RUN apk add --no-cache --virtual .build4pjsip \
     && apk del .build4pjsip
 
 #========================
-# Install mongodb
-# https://github.com/mvertes/docker-alpine-mongo
-#========================
-RUN apk update && apk upgrade \
-    && apk add --no-cache mongodb \
-    && mkdir -p /data/db \
-    && rm -rf /var/cache/apk/*
-
-#========================
 # Installs latest Chromium package.
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
 #========================
@@ -62,15 +53,3 @@ RUN apk update && apk upgrade && \
       chromium@edge~=${VERSION_CHROMIUM} \
       nss@edge \
       harfbuzz@edge
-
-#========================
-# Installs supervisor
-#========================
-RUN apk update && apk upgrade \
-    && apk add --no-cache supervisor openssh \
-    && rm -rf /var/cache/apk/* \
-    && rm -f /etc/supervisord.conf \
-    && mkdir -p /etc/supervisor/conf.d \
-    && mkdir /var/log/supervisor
-COPY supervisor/supervisord.conf /etc/supervisord.conf
-COPY supervisor/mongodb.conf /etc/supervisor/conf.d/mongodb.conf
