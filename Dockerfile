@@ -6,7 +6,7 @@ ENV NODE_CONTAINER=docker
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV VERSION_PJSIP 2.8
-ENV VERSION_CHROMIUM 77
+ENV VERSION_CHROMIUM 71
 #========================
 # Add edge into repositories
 #========================
