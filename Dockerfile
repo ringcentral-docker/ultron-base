@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:12-alpine
 LABEL authors="john.lin<john.lin@ringcentral.com>"
 
 ENV NODE_CONTAINER=docker
@@ -6,7 +6,7 @@ ENV NODE_CONTAINER=docker
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV VERSION_PJSIP 2.8
-ENV VERSION_CHROMIUM 72
+ENV VERSION_CHROMIUM 80
 #========================
 # Add edge into repositories
 #========================
@@ -59,6 +59,4 @@ RUN apk update && apk upgrade && \
       freetype-dev@edge \
       harfbuzz@edge \
       ttf-freefont@edge
-
-RUN npm config set registry https://registry.npm.taobao.org
 
