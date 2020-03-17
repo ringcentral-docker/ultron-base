@@ -35,7 +35,7 @@ RUN apk add --no-cache --virtual .build4pjsip \
     openssl-dev \
     opus-dev \
     && cd /opt \
-    && wget -qnv "http://www.pjsip.org/release/$VERSION_PJSIP/pjproject-$VERSION_PJSIP.tar.bz2" -O - | tar xjf - \
+    && wget -qnv "https://github.com/pjsip/pjproject/archive/$VERSION_PJSIP.tar.gz" -O - | tar zxvf - \
     && cd /opt/pjproject-$VERSION_PJSIP \
     && ./configure CFLAGS='-O2 -fPIC' \
     && make dep \
