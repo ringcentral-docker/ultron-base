@@ -59,3 +59,6 @@ RUN apk update && apk upgrade && \
       freetype-dev@edge \
       harfbuzz@edge \
       ttf-freefont@edge
+
+RUN npm config set registry https://registry.npm.taobao.org
+
