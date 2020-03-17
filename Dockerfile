@@ -37,7 +37,7 @@ RUN apk add --no-cache --virtual .build4pjsip \
     && cd /opt \
     && wget -qnv "https://github.com/pjsip/pjproject/archive/$VERSION_PJSIP.tar.gz" -O - | tar zxvf - \
     && cd /opt/pjproject-$VERSION_PJSIP \
-    && ./configure CFLAGS='-O2 -fPIC' \
+    && ./configure CFLAGS='-O3 -DNDEBUG -msoft-float -fno-builtin' \
     && make dep \
     && make \
     && make install \
