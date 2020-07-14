@@ -1,0 +1,56 @@
+name: Build Ultron base image
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      # '*' matches any character except '/'
+      - '*'
+      - '.github/workflows/*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Docker login
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets. DOCKER_HUB_USERNAME }} 
+        DOCKER_HUB_PASSWORD: ${{ secrets. DOCKER_HUB_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+      run: |
+        echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+        echo $GITHUB_TOKEN | docker login docker.pkg.github.com --username $GITHUB_ACTOR --password-stdin
+
+    - name: Build & Push Docker Image
+      run: |
+        IMAGE_NAME=ringcentral/ultron-base
+        GH_DOCKER_PKG_IMAGE_NAME=docker.pkg.github.com/ringcentral-docker/ultron-base/ultron-base
+
+        NODE_VERSION="$(awk -F '[:-]' '/FROM/ {print $2}' Dockerfile)"
+        PJSIP_VERSION="$(awk '/ENV VERSION_PJSIP/ {print $3}' Dockerfile)"
+        CHROMIUM_VERSION="$(awk '/ENV VERSION_CHROMIUM/ {print $3}' Dockerfile)"
+
+        docker build --tag ${IMAGE_NAME} --file Dockerfile .
+        
+        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}"
+        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
+        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
+        
+        docker push "${IMAGE_NAME}:latest"
+        docker push "${IMAGE_NAME}:node${NODE_VERSION}"
+        docker push "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
+        docker push "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}
+
+        
+        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
+        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}"
+        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
+        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
+        
+        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
+        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}"
+        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
+        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}

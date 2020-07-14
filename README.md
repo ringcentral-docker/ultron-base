@@ -1,8 +1,7 @@
-# Centralized WebPhone Base
+# Ultron Base
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/ringcentral-docker/centralized-webphone-base.svg?branch=master)](https://travis-ci.org/ringcentral-docker/centralized-webphone-base)
 
 ## Image description
 
