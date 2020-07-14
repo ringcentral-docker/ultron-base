@@ -2,6 +2,7 @@
 
 ## Build Status
 
+![Build Ultron base image](https://github.com/ringcentral-docker/ultron-base/workflows/Build%20Ultron%20base%20image/badge.svg)
 
 ## Image description
 
@@ -16,8 +17,8 @@
 ## Get the Image
 
 ```bash
-docker pull ringcentral/centralized-webphone-base:latest
+docker pull ringcentral/ultron-base:latest
 ```
 
 for more detail information please refer this url:
-<https://github.com/ringcentral-docker/centralized-webphone-base>
+<https://github.com/ringcentral-docker/ultron-base>
