@@ -4,9 +4,7 @@ LABEL authors="john.lin<john.lin@ringcentral.com>"
 ENV NODE_CONTAINER=docker
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV VERSION_PJSIP 2.10
-ENV VERSION_CHROMIUM 80
+ENV VERSION_PJSIP 2.8
 #========================
 # Add edge into repositories
 #========================
@@ -46,17 +44,3 @@ RUN apk add --no-cache --virtual .build4pjsip \
     && cd /opt \
     && rm -rf pjproject-$VERSION_PJSIP \
     && apk del .build4pjsip
-
-#========================
-# Installs latest Chromium package.
-# https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
-#========================
-RUN apk update && apk upgrade && \
-    apk add --no-cache \
-      chromium@edge~=${VERSION_CHROMIUM} \
-      nss@edge \
-      freetype@edge \
-      freetype-dev@edge \
-      harfbuzz@edge \
-      ttf-freefont@edge
-
