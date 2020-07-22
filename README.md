@@ -6,11 +6,10 @@
 
 ## Image description
 
-* Base on the lts version of node Docker Image : [link](https://hub.docker.com/_/node/)
+* Base on the lts version of node 12 Docker Image : [link](https://hub.docker.com/_/node/)
 
-* NodeJS Version : 10.15
+* NodeJS Version : 12.18.2
 * PJSIP Version : 2.8
-* Chromium Version : 71
 
 ## How to use this image
 
