@@ -3,17 +3,12 @@ LABEL authors="john.lin<john.lin@ringcentral.com>"
 
 ENV NODE_CONTAINER=docker
 ENV VERSION_PJSIP=2.8
-ENV VERSION_CHROMIUM=83
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-#========================
-# Add edge into repositories
-#========================
-RUN echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
-    && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+    CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_PATH=/usr/lib/chromium/
 
 #========================
 # Install bash and ca-certificates
@@ -52,12 +47,29 @@ RUN apk add --no-cache --virtual .build4pjsip \
 #========================
 # Installs latest Chromium package.
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
+# https://github.com/Zenika/alpine-chrome/blob/master/Dockerfile
 #========================
-RUN apk update && apk upgrade && \
-    apk add --no-cache \
-      chromium~=${VERSION_CHROMIUM} \
-      nss \
-      freetype \
-      freetype-dev \
-      harfbuzz \
-      ttf-freefont
+# Installs latest Chromium package.
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/main" >> /etc/apk/repositories \
+    && apk update \
+    && apk upgrade \
+    && apk add --no-cache \
+    libstdc++ \
+    chromium \
+    harfbuzz \
+    nss \
+    freetype \
+    freetype-dev \
+    ttf-freefont \
+    wqy-zenhei \
+    && rm -rf /var/cache/* \
+    && mkdir /var/cache/apk
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Autorun chrome headless
+ENTRYPOINT ["chromium-browser", "--headless", "--use-gl=swiftshader", "--disable-software-rasterizer", "--disable-dev-shm-usage"]

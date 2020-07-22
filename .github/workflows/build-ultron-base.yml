@@ -32,27 +32,22 @@ jobs:
 
         NODE_VERSION="$(awk -F '[:-]' '/FROM/ {print $2}' Dockerfile)"
         PJSIP_VERSION="$(awk -F= '/VERSION_PJSIP=/ {print $2}' Dockerfile)"
-        CHROMIUM_VERSION="$(awk -F= '/VERSION_CHROMIUM=/ {print $2}' Dockerfile)"
 
         docker build --tag ${IMAGE_NAME} --file Dockerfile .
         
         docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
         docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}"
         docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
-        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
         
         docker push "${IMAGE_NAME}:latest"
         docker push "${IMAGE_NAME}:node${NODE_VERSION}"
         docker push "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
-        docker push "${IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
 
         
         docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
         docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}"
         docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
-        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
         
         docker push "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
         docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}"
         docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
-        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}-chromium${CHROMIUM_VERSION}"
