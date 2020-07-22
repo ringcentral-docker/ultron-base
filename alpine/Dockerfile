@@ -50,12 +50,7 @@ RUN apk add --no-cache --virtual .build4pjsip \
 # https://github.com/Zenika/alpine-chrome/blob/master/Dockerfile
 #========================
 # Installs latest Chromium package.
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/main" >> /etc/apk/repositories \
-    && apk update \
-    && apk upgrade \
+RUN apk update \
     && apk add --no-cache \
     libstdc++ \
     chromium \
