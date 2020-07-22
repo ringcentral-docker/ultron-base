@@ -59,7 +59,6 @@ RUN apk update \
     freetype \
     freetype-dev \
     ttf-freefont \
-    wqy-zenhei \
     && rm -rf /var/cache/* \
     && mkdir /var/cache/apk
 
