@@ -2,8 +2,18 @@ FROM node:12-alpine
 LABEL authors="john.lin<john.lin@ringcentral.com>"
 
 ENV NODE_CONTAINER=docker
+ENV VERSION_PJSIP=2.8
+ENV VERSION_CHROMIUM=83
 
-ENV VERSION_PJSIP 2.8
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+#========================
+# Add edge into repositories
+#========================
+RUN echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
+    && echo @edge http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
 
 #========================
 # Install bash and ca-certificates
@@ -38,3 +48,16 @@ RUN apk add --no-cache --virtual .build4pjsip \
     && cd /opt \
     && rm -rf pjproject-$VERSION_PJSIP \
     && apk del .build4pjsip
+
+#========================
+# Installs latest Chromium package.
+# https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
+#========================
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+      chromium~=${VERSION_CHROMIUM} \
+      nss \
+      freetype \
+      freetype-dev \
+      harfbuzz \
+      ttf-freefont
