@@ -4,9 +4,7 @@ LABEL authors="john.lin<john.lin@ringcentral.com>"
 ENV NODE_CONTAINER=docker
 ENV VERSION_PJSIP=2.8
 
-# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
 
@@ -14,7 +12,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 # Install bash and ca-certificates
 #========================
 RUN apk update && apk upgrade \
-    && apk add --no-cache ca-certificates bash git python-dev py-pip gcc g++\
+    && apk add --no-cache ca-certificates bash git python3-dev py-pip gcc g++\
     && pip install numpy==1.16.5 \
     && pip install pandas==0.23.4 \
     && pip install requests \
