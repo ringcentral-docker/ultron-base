@@ -25,7 +25,7 @@ jobs:
 
     - name: Build & Push Docker Image
       run: |
-        cd alpine
+        cd bullseye
         
         IMAGE_NAME=ringcentral/ultron-base
         GH_DOCKER_PKG_IMAGE_NAME=docker.pkg.github.com/ringcentral-docker/ultron-base/ultron-base
