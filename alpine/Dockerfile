@@ -13,8 +13,8 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
 #========================
 RUN apk update && apk upgrade \
     && apk add --no-cache ca-certificates bash git python3-dev py-pip gcc g++\
-    && pip install numpy==1.16.5 \
-    && pip install pandas==0.23.4 \
+    && pip install numpy \
+    && pip install pandas \
     && pip install requests \
     && pip install socketIO_client \
     && rm -rf /var/cache/apk/*
