@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 LABEL authors="john.lin<john.lin@ringcentral.com>"
 
 ENV NODE_CONTAINER=docker
