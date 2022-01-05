@@ -6,7 +6,7 @@ on:
       - master
     paths:
       # '*' matches any character except '/'
-      - 'alpine/*'
+      - 'bullseye/*'
       - '.github/workflows/*'
 jobs:
   build:
