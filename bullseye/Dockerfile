@@ -8,13 +8,7 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
             build-essential \
             ca-certificates \
-            curl \
-            libgsm1-dev \
-            libspeex-dev \
-            libspeexdsp-dev \
-            libsrtp0-dev \
-            libssl-dev \
-            portaudio19-dev \
+            binutils \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
 
