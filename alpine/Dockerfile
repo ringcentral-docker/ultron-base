@@ -2,7 +2,7 @@ FROM node:14-alpine
 LABEL authors="john.lin<john.lin@ringcentral.com>"
 
 ENV NODE_CONTAINER=docker
-ENV VERSION_PJSIP=2.8
+ENV VERSION_PJSIP=2.11.1
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     CHROME_BIN=/usr/bin/chromium-browser \
@@ -37,7 +37,7 @@ RUN apk add --no-cache --virtual .build4pjsip \
     && make \
     && make install \
     && cd /opt/pjproject-$VERSION_PJSIP/pjsip-apps/src/python \
-    && python ./setup.py install \
+    && python3 ./setup.py install \
     && cd /opt \
     && rm -rf pjproject-$VERSION_PJSIP \
     && apk del .build4pjsip
