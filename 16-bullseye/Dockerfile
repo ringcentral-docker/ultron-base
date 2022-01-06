@@ -26,7 +26,6 @@ RUN cd /opt && \
     /sbin/ldconfig && \
     rm -rf /opt/pjproject-$VERSION_PJSIP
 
-
 # Puppeteer
 # https://github.com/adrianchia/docker-node-puppeteer/blob/master/12/Dockerfile
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
