@@ -6,10 +6,10 @@
 
 ## Image description
 
-* Base on the lts version of node 12 Docker Image : [link](https://hub.docker.com/_/node/)
+* Base on the lts version of node 14 Docker Image : [link](https://hub.docker.com/_/node/)
 
-* NodeJS Version : 12.18.2
-* PJSIP Version : 2.8
+* NodeJS Version : 14
+* PJSIP Version : 2.11.1
 
 ## How to use this image
 
