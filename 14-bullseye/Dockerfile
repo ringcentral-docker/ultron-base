@@ -1,7 +1,7 @@
 FROM node:14-bullseye
 LABEL authors="john.lin<john.lin@ringcentral.com>"
 
-ENV VERSION_PJSIP=2.11.1
+ENV VERSION_PJSIP=2.12
 
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
@@ -23,8 +23,8 @@ RUN cd /opt && \
                 --prefix=/usr \
                 && \
     make all install && \
-    /sbin/ldconfig && \
-    rm -rf /opt/pjproject-$VERSION_PJSIP
+    /sbin/ldconfig
+    
 
 # Puppeteer
 # https://github.com/adrianchia/docker-node-puppeteer/blob/master/12/Dockerfile
@@ -37,6 +37,7 @@ RUN apt-get update && \
     libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 \
     libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 mercurial rng-tools\
     libxrandr2 libxrender1 libxss1 libxtst6 libatk-bridge2.0-0 ca-certificates \
+    build-essential python3-dev libasound2-dev \
     fonts-liberation libnss3 lsb-release xdg-utils wget --no-install-recommends \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
@@ -47,6 +48,13 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /src/*.deb
 
+
+RUN cd /opt/pjproject-$VERSION_PJSIP/pjsip-apps/src/ && \
+    git clone https://github.com/mgwilliams/python3-pjsip.git && \
+    cd python3-pjsip && \
+    python3 setup.py build && \
+    python3 setup.py install
+    
 # It's a good idea to use dumb-init to help prevent zombie chrome processes
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
