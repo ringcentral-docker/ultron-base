@@ -54,7 +54,7 @@ RUN cd /opt/pjproject-$VERSION_PJSIP/pjsip-apps/src/ && \
     cd python3-pjsip && \
     python3 setup.py build && \
     python3 setup.py install && \
-    pip3 install socketIO-client
+    pip3 install "python-socketio[client]"
     
 # It's a good idea to use dumb-init to help prevent zombie chrome processes
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 /usr/local/bin/dumb-init
