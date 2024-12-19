@@ -1,4 +1,4 @@
-name: Build Ultron base image base on node 14 Debian(bullseye)
+name: Build Ultron base image base on node 16 Debian
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - master
     paths:
       # '*' matches any character except '/'
-      - '14-bullseye/*'
-      - '.github/workflows/14-bullseye.yml'
+      - '16-debian/*'
+      - '.github/workflows/16-debian.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
 
     - name: Build & Push Docker Image
       run: |
-        cd 14-bullseye
+        cd 16-debian
         
         IMAGE_NAME=ringcentral/ultron-base
         GH_DOCKER_PKG_IMAGE_NAME=docker.pkg.github.com/ringcentral-docker/ultron-base/ultron-base
@@ -46,8 +46,3 @@ jobs:
         
         docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}"
         docker push "${GH_DOCKER_PKG_IMAGE_NAME}:node${NODE_VERSION}-pjsip${PJSIP_VERSION}"
-
-        docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
-        docker tag "$IMAGE_NAME" "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
-        docker push "${IMAGE_NAME}:latest"
-        docker push "${GH_DOCKER_PKG_IMAGE_NAME}:latest"
