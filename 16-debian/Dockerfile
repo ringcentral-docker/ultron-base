@@ -10,7 +10,7 @@ RUN apt-get update -qq && \
             ca-certificates \
             binutils \
             pulseaudio \
-            python3-dev \
+            python-dev \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
 
