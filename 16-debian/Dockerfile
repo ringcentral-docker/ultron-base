@@ -9,8 +9,10 @@ RUN apt-get update -qq && \
             build-essential \
             ca-certificates \
             binutils \
-            pulseaudio \
-            python-dev \
+            pulseaudio \            
+            python3 \
+            python3-dev \
+            python3-setuptools \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
 
@@ -25,8 +27,8 @@ RUN cd /opt && \
     cd pjsip-apps/src/ && \
     git clone https://github.com/mgwilliams/python3-pjsip.git && \
     cd python3-pjsip && \
-    python setup.py build && \
-    python setup.py install && \
+    python3 setup.py build && \
+    python3 setup.py install && \
     rm -rf /opt/pjproject-$VERSION_PJSIP
 
 RUN apt-get update && \
